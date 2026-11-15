@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 15, 2026 at 02:24 AM
+-- Generation Time: Nov 15, 2026 at 08:50 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -80,8 +80,10 @@ CREATE TABLE `registrations` (
   `id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `student_name` varchar(120) NOT NULL,
-  `matric_no` varchar(30) NOT NULL,
+  `matric_no` varchar(30) DEFAULT NULL,
   `email` varchar(120) NOT NULL,
+  `checked_in` tinyint(1) NOT NULL DEFAULT 0,
+  `checked_in_at` timestamp NULL DEFAULT NULL,
   `registered_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -89,8 +91,8 @@ CREATE TABLE `registrations` (
 -- Dumping data for table `registrations`
 --
 
-INSERT INTO `registrations` (`id`, `event_id`, `student_name`, `matric_no`, `email`, `registered_at`) VALUES
-(1, 3, 'Stefan', '100100300', 'schiamaka03@icloud.com', '2026-11-15 00:58:33');
+INSERT INTO `registrations` (`id`, `event_id`, `student_name`, `matric_no`, `email`, `checked_in`, `checked_in_at`, `registered_at`) VALUES
+(1, 3, 'Stefan', '100100300', 'schiamaka03@icloud.com', 0, NULL, '2026-11-15 00:58:33');
 
 -- --------------------------------------------------------
 
@@ -116,7 +118,8 @@ CREATE TABLE `role_requests` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `full_name` varchar(120) NOT NULL,
-  `matric_no` varchar(30) NOT NULL,
+  `account_type` enum('student','staff') NOT NULL DEFAULT 'student',
+  `matric_no` varchar(30) DEFAULT NULL,
   `email` varchar(120) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `role` enum('student','organizer','admin') DEFAULT 'student',
@@ -127,10 +130,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `full_name`, `matric_no`, `email`, `password_hash`, `role`, `created_at`) VALUES
-(1, 'Chiamaka Odo', '252130103', 'schiamaka03@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-11-14 23:14:38'),
-(2, 'Ikechukwu Isikwei', '242130005', 'itsjustik01@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-11-14 23:14:38'),
-(3, 'Stefan', '100100300', 'schiamaka03@icloud.com', '$2y$10$ZuLGQOeEU8JpqG.tUtsYROzaDvdwyMAPvjgjmW5g8cooPNgoUUPEG', 'student', '2026-11-15 00:55:43');
+INSERT INTO `users` (`id`, `full_name`, `account_type`, `matric_no`, `email`, `password_hash`, `role`, `created_at`) VALUES
+(1, 'Chiamaka Odo', 'student', '252130103', 'schiamaka03@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-11-14 23:14:38'),
+(2, 'Ikechukwu Isikwei', 'student', '242130005', 'itsjustik01@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-11-14 23:14:38'),
+(3, 'Stefan', 'student', '100100300', 'schiamaka03@icloud.com', '$2y$10$ZuLGQOeEU8JpqG.tUtsYROzaDvdwyMAPvjgjmW5g8cooPNgoUUPEG', 'student', '2026-11-15 00:55:43');
 
 --
 -- Indexes for dumped tables
@@ -153,7 +156,7 @@ ALTER TABLE `events`
 --
 ALTER TABLE `registrations`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_registration` (`event_id`,`matric_no`);
+  ADD UNIQUE KEY `unique_event_email` (`event_id`,`email`);
 
 --
 -- Indexes for table `role_requests`

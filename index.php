@@ -2,7 +2,6 @@
 $page_crumb = 'HOME';
 require_once __DIR__ . '/includes/header.php';
 
-// Fetch next 3 upcoming events
 $upcoming_sql = "SELECT e.*, (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.id) AS registered_count 
                  FROM events e ORDER BY e.event_date ASC, e.event_time ASC LIMIT 3";
 $upcoming_res = $conn->query($upcoming_sql);
@@ -51,7 +50,9 @@ $upcoming_res = $conn->query($upcoming_sql);
 
     <?php if ($upcoming_res && $upcoming_res->num_rows > 0): ?>
         <div class="row g-3">
-            <?php while ($ev = $upcoming_res->fetch_assoc()): ?>
+            <?php while ($ev = $upcoming_res->fetch_assoc()): 
+                $spots_left = max(0, (int)$ev['capacity'] - (int)$ev['registered_count']);
+            ?>
                 <div class="col-md-4">
                     <div class="cg-card h-100 d-flex flex-column justify-content-between">
                         <div>
@@ -64,7 +65,11 @@ $upcoming_res = $conn->query($upcoming_sql);
                         </div>
                         <div class="border-top pt-2 d-flex justify-content-between align-items-center small">
                             <span class="text-muted"><i class="bi bi-geo-alt"></i> <?= e($ev['venue']) ?></span>
-                            <a href="events.php" class="fw-semibold text-decoration-none">Register &rarr;</a>
+                            <?php if ($spots_left <= 0): ?>
+                                <span class="badge bg-danger-subtle text-danger">Event Full</span>
+                            <?php else: ?>
+                                <a href="events.php" class="fw-semibold text-decoration-none"><?= $spots_left ?> spots left &rarr;</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

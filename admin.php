@@ -235,7 +235,7 @@ if ($current_role === 'admin') {
                     <?php while ($u = $users_res->fetch_assoc()): ?>
                         <tr>
                             <td class="fw-semibold"><?= e($u['full_name']) ?></td>
-                            <td class="small"><?= e($u['matric_no']) ?></td>
+                            <td class="small"><?= $u['matric_no'] ? e($u['matric_no']) : '<span class="badge bg-info-subtle text-dark border">STAFF</span>' ?></td>
                             <td class="small"><?= e($u['email']) ?></td>
                             <td>
                                 <span class="badge <?= $u['role'] === 'admin' ? 'bg-primary' : ($u['role'] === 'organizer' ? 'bg-info text-dark' : 'bg-secondary') ?>">
