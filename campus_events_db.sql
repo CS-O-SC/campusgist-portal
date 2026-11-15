@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 15, 2026 at 01:39 AM
+-- Generation Time: Nov 15, 2026 at 02:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -85,6 +85,28 @@ CREATE TABLE `registrations` (
   `registered_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `registrations`
+--
+
+INSERT INTO `registrations` (`id`, `event_id`, `student_name`, `matric_no`, `email`, `registered_at`) VALUES
+(1, 3, 'Stefan', '100100300', 'schiamaka03@icloud.com', '2026-11-15 00:58:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_requests`
+--
+
+CREATE TABLE `role_requests` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `requested_role` enum('organizer','admin') NOT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `status` enum('pending','approved','denied') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -107,7 +129,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `full_name`, `matric_no`, `email`, `password_hash`, `role`, `created_at`) VALUES
 (1, 'Chiamaka Odo', '252130103', 'schiamaka03@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-11-14 23:14:38'),
-(2, 'Ikechukwu Isikwei', '242130005', 'itsjustik01@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-11-14 23:14:38');
+(2, 'Ikechukwu Isikwei', '242130005', 'itsjustik01@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-11-14 23:14:38'),
+(3, 'Stefan', '100100300', 'schiamaka03@icloud.com', '$2y$10$ZuLGQOeEU8JpqG.tUtsYROzaDvdwyMAPvjgjmW5g8cooPNgoUUPEG', 'student', '2026-11-15 00:55:43');
 
 --
 -- Indexes for dumped tables
@@ -131,6 +154,13 @@ ALTER TABLE `events`
 ALTER TABLE `registrations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_registration` (`event_id`,`matric_no`);
+
+--
+-- Indexes for table `role_requests`
+--
+ALTER TABLE `role_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -160,13 +190,19 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `registrations`
 --
 ALTER TABLE `registrations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `role_requests`
+--
+ALTER TABLE `role_requests`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -177,6 +213,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `registrations`
   ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `role_requests`
+--
+ALTER TABLE `role_requests`
+  ADD CONSTRAINT `role_requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
