@@ -26,14 +26,36 @@ $upcoming_res = $conn->query($upcoming_sql);
     </div>
 
     <div class="col-lg-5 text-center">
-        <div class="orbit-graphic">
-            <span class="topbar-pill position-absolute" style="top: -12px; left: 10px; font-size: 0.68rem;">&bull; EVENTS</span>
-            <span class="topbar-pill position-absolute" style="right: -18px; font-size: 0.68rem;">&bull; LIVE UPDATES</span>
-            <span class="topbar-pill position-absolute" style="bottom: -12px; left: 15px; font-size: 0.68rem;">&bull; YOUR PEOPLE</span>
-            <div class="orbit-inner">
-                <span class="fw-extrabold fs-4 text-primary" style="font-weight: 800;">CG</span>
-                <span style="font-size: 0.55rem; letter-spacing: 0.08em; color: #64748b;">CAMPUS<br>CONNECTED</span>
+        <div class="orbit-stage">
+            <div class="orbit-glow"></div>
+            <div class="orbit-circle-outer"></div>
+
+            <!-- Tilted Orbital Plane 1 -->
+            <div class="orbit-plane plane-1">
+                <div class="orbit-ellipse">
+                    <span class="orbit-dot"></span>
+                </div>
             </div>
+
+            <!-- Tilted Orbital Plane 2 -->
+            <div class="orbit-plane plane-2">
+                <div class="orbit-ellipse ellipse-alt">
+                    <span class="orbit-dot dot-alt"></span>
+                </div>
+            </div>
+
+            <!-- Floating Feature Cards -->
+            <div class="orbit-card card-float-1" style="top: 18px; left: 8px;"><span class="card-dot"></span> EVENTS</div>
+            <div class="orbit-card card-float-2" style="top: 44%; right: -8px;"><span class="card-dot"></span> LIVE UPDATES</div>
+            <div class="orbit-card card-float-3" style="bottom: 24px; left: 14px;"><span class="card-dot"></span> YOUR PEOPLE</div>
+
+            <!-- Center Sphere + Blue Halo -->
+            <div class="orbit-halo"></div>
+            <div class="orbit-sphere">
+                <span class="text-primary" style="font-weight: 800; font-size: 1.7rem; line-height: 1; letter-spacing: -0.02em;">CG</span>
+                <span style="font-size: 0.54rem; font-weight: 600; letter-spacing: 0.12em; color: #64748b; margin-top: 4px; line-height: 1.25;">CAMPUS<br>CONNECTED</span>
+            </div>
+            <span class="orbit-index">01 / 04</span>
         </div>
     </div>
 </div>

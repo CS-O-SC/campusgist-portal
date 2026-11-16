@@ -408,3 +408,174 @@ body {
         padding: 1rem;
     }
 }
+
+/* Tilted 3D Orbit Stage (Overview Hero) */
+.orbit-stage {
+    width: 350px;
+    height: 310px;
+    max-width: 100%;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orbit-glow {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.16) 0%, rgba(37, 99, 235, 0) 70%);
+    animation: cgPulse 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.orbit-circle-outer {
+    position: absolute;
+    width: 265px;
+    height: 265px;
+    border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    pointer-events: none;
+}
+
+/* Tilted Orbital Planes */
+.orbit-plane {
+    position: absolute;
+    width: 315px;
+    height: 155px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.plane-1 {
+    transform: rotate(-28deg);
+}
+
+.plane-2 {
+    transform: rotate(28deg);
+}
+
+/* Full 360-Degree Continuous Spin Inside Each Tilted Plane */
+.orbit-ellipse {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, 0.36);
+    position: relative;
+    animation: cgSpinFull 9s linear infinite;
+}
+
+.orbit-ellipse.ellipse-alt {
+    border-color: rgba(37, 99, 235, 0.26);
+    animation: cgSpinReverseFull 12s linear infinite;
+}
+
+.orbit-dot {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--cg-primary);
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.75);
+}
+
+.orbit-dot.dot-alt {
+    top: auto;
+    bottom: -4px;
+    background: #3b82f6;
+}
+
+/* Thin Blue Halo Around Center Sphere */
+.orbit-halo {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    animation: cgPulse 3.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.orbit-sphere {
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #f1f5f9 75%, #e2e8f0 100%);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08), inset 0 2px 6px rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Floating Cards */
+.orbit-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 10px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    color: #334155;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    z-index: 3;
+    white-space: nowrap;
+}
+
+.card-float-1 { animation: cgFloat 4s ease-in-out infinite; }
+.card-float-2 { animation: cgFloat 4.6s ease-in-out 0.8s infinite; }
+.card-float-3 { animation: cgFloat 4.2s ease-in-out 1.5s infinite; }
+
+.card-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--cg-primary);
+}
+
+.orbit-index {
+    position: absolute;
+    bottom: 0;
+    right: 8px;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    color: #94a3b8;
+}
+
+@keyframes cgSpinFull {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes cgSpinReverseFull {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+@keyframes cgFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes cgPulse {
+    0%, 100% { transform: scale(0.96); opacity: 0.75; }
+    50% { transform: scale(1.06); opacity: 1; }
+}
